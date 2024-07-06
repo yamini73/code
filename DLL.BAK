@@ -1,0 +1,196 @@
+#include<stdio.h>
+#include<conio.h>
+struct node
+{
+int data;
+struct node *right;
+struct node *left;
+};
+struct node *start=NULL;
+struct node *temp,*prev;
+void insertend();
+void insertfront();
+void insertmiddle();
+void display();
+void deleteend();
+void deletefront();
+void deletemiddle();
+void count();
+void main()
+{
+int ch,item,value;
+clrscr();
+printf("choices in the list are:\n");
+printf("\n1.insertend \n2.insertfront\n 3.insertmiddle\n 4.deleteend\n 5.deletefront\n 6.deletemiddle\n 7.count");
+do
+{
+printf("\nenter the choice");
+scanf("%d",&ch);
+switch(ch)
+{
+case 1 :insertend(value);
+	display();
+	break;
+case 2 :insertfront(value);
+	display();
+	break;
+case 3 :insertmiddle(item,value);
+	display();
+	break;
+case 4 :deleteend();
+	display();
+	break;
+case 5 :deletefront();
+	display();
+	break;
+case 6 :deletemiddle(item);
+	display();
+	break;
+case 7 :display();
+	break;
+case 8 :count();
+	break;
+default:
+	printf("invalid!!");
+	break;
+}
+}while(ch<9);
+getch();
+}
+void insertend(int value)
+{
+struct node *new;
+new=(struct node*)malloc(sizeof(struct node));
+printf("enter the value ofinsertend:\n");
+scanf("%d",&value);
+new->data=value;
+new->right=NULL;
+new->left=NULL;
+if(start==NULL)
+{
+printf("first node\n");
+start=new;
+start->right=NULL;
+start->left=NULL;
+}
+else
+{
+temp=start;
+while(temp->right!=NULL)
+{
+temp=temp->right;
+}
+temp->right=new;
+new->left=temp;
+}
+}
+void display()
+{
+printf("the nodes in the list :\n");
+if(start==NULL)
+{
+printf("list is empty\n");
+}
+else
+{
+temp=start;
+while(temp!=NULL)
+{
+printf("%d\t",temp->data);
+temp=temp->right;
+}
+}
+}
+void insertfront(int value)
+{
+struct node *new;
+new=(struct node*)malloc(sizeof(struct node));
+printf("enter the data to insert first:\n");
+scanf("%d",&value);
+new->data=value;
+new->right=NULL;
+new->left=NULL;
+if(start==NULL)
+{
+start=new;
+start->right=NULL;
+start->left=NULL;
+}
+else
+{
+new->right=start;
+start->left=new;
+start=new;
+}
+}
+void insertmiddle(int value,int item)
+{
+struct node *new;
+new=(struct node*)malloc(sizeof(struct node));
+printf("enter the data to insert middle:\n");
+scanf("%d",&value);
+new->data=value;
+printf("enter the previous item");
+scanf("%d",&item);
+new->right=NULL;
+new->left=NULL;
+temp=start;
+while(temp->data!=item)
+{
+prev=temp;
+temp=temp->right;
+}
+new->right=temp->right;
+temp->right=new;
+}
+void deleteend()
+{
+temp=start;
+while(temp->right!=NULL)
+{
+prev=temp;
+temp=temp->right;
+}
+prev->right=NULL;
+free(temp);
+}
+void deletefront()
+{
+temp=start;
+start=temp->right;
+start->left=NULL;
+free(temp);
+}
+void deletemiddle(int item)
+{
+ printf("enter the value to delete:");
+ scanf("%d",&item);
+ temp=start;
+ while(temp->data!=item)
+ {
+  prev=temp;
+  temp=temp->right;
+  }
+  prev->right=temp->right;
+  prev=temp;
+  free(temp);
+  }
+void count()
+{
+int count=0;
+temp=start;
+while(temp->right!=NULL)
+{
+count++;
+temp=temp->right;
+}
+printf("count value is %d",count+1);
+}
+
+
+
+
+
+
+
+
